@@ -13,7 +13,7 @@
                     <td>Type</td>
                     <td>Time</td>
                 </tr>
-				<tr ng-repeat="departure in departures | fromNow | orderBy:['time.hours', 'time.minutes'] | limitTo:3">
+				<tr ng-repeat="departure in departures | orderBy:['time.hours', 'time.minutes'] | limitTo:3">
 					<td>{{departure.type}}</td>
 					<td>{{departure.time.hours}}:{{departure.time.minutes}}</td>
 				</tr>

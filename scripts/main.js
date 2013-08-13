@@ -84,29 +84,33 @@ busScheduleApp.factory("Schedule", function() {
     return BusSchedule;
 });
 
-busScheduleApp.filter('fromNow', function() {
-    return function(departures) {
-        var now = new Date();
-        var currentHours = now.getHours();
-        var currentMinutes = now.getMinutes();
+busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
 
-        var departuresFromNow = [];
+    var departures = Schedule.departures;
 
-        for(var i=0; i < departures.length; i++) {
-            if(departures[i].time.hours > currentHours) {
-                departuresFromNow.push(departures[i]);
-            }
-            if(departures[i].time.hours == currentHours) {
-                if(departures[i].time.minutes >= currentMinutes) {
+    $scope.$watch('departures', function() {
+        $timeout(function() {
+
+            //current time
+            var now = new Date();
+            var currentHours = now.getHours();
+            var currentMinutes = now.getMinutes();
+
+            var departuresFromNow = [];
+
+            for(var i=0; i < departures.length; i++) {
+                if(departures[i].time.hours > currentHours) {
                     departuresFromNow.push(departures[i]);
                 }
+                if(departures[i].time.hours == currentHours) {
+                    if(departures[i].time.minutes >= currentMinutes) {
+                        departuresFromNow.push(departures[i]);
+                    }
+                }
             }
-        }
 
-        return departuresFromNow
-    }
-});
+            $scope.departures = departuresFromNow;
 
-busScheduleApp.controller('ScheduleCtrl', function($scope, Schedule) {
-    $scope.departures = Schedule.departures;
+        }, 1000);
+    });
 });
