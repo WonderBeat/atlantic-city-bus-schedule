@@ -1,0 +1,13 @@
+.content {
+
+}
+
+tr:first-child {
+    background-color: #02AFEF;
+    color: #fff;
+}
+
+td {
+    display: block;
+    border: 1px solid black;
+}

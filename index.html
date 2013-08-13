@@ -1,0 +1,23 @@
+<!doctype>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script src="scripts/lib/angular.js"></script>
+		<script src="scripts/main.js"></script>
+		<link rel="stylesheet" href="styles/main.css">
+	</head>
+	<body ng-app="busScheduleApp">
+		<div class="content" ng-controller="ScheduleCtrl">
+			<table>
+                <tr>
+                    <td>Type</td>
+                    <td>Time</td>
+                </tr>
+				<tr ng-repeat="departure in departures | fromNow | orderBy:['time.hours', 'time.minutes'] | limitTo:3">
+					<td>{{departure.type}}</td>
+					<td>{{departure.time.hours}}:{{departure.time.minutes}}</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
