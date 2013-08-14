@@ -77,7 +77,7 @@ busScheduleApp.factory("Schedule", function() {
             "type": "Yota Bus(Автобус на 50 мест)",
             "time": {
                 "hours": 16,
-                "minutes": 10
+                "minutes": 12
             }
         }
     ];
@@ -109,10 +109,10 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
         if((currentHours > nearestDepartureHours)) {
             minutesToNearestDeparture = 0;
         }
-        if((currentHours == nearestDepartureHours) && (currentMinutes >= nearestDepartureMinutes)) {
+        if((currentHours == nearestDepartureHours) && (currentMinutes < nearestDepartureMinutes)) {
             minutesToNearestDeparture = nearestDepartureMinutes - currentMinutes;
         }
-        if((currentHours == nearestDepartureHours) && (currentMinutes < nearestDepartureMinutes)) {
+        if((currentHours == nearestDepartureHours) && (currentMinutes >= nearestDepartureMinutes)) {
             minutesToNearestDeparture = 0;
         }
         if((currentHours < nearestDepartureHours)) {

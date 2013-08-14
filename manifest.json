@@ -1,0 +1,12 @@
+{
+    "manifest_version": 2,
+
+    "name": "Atlantic City Bus Scheduler",
+    "description": "This extension provides bus schedule.",
+    "version": "1.0",
+
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "index.html"
+    }
+}
