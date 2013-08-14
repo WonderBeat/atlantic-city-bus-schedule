@@ -10,8 +10,8 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Микроавтобус)",
             "time": {
-                "hours": 18,
-                "minutes": 20
+                "hours": 13,
+                "minutes": 25
             }
         },
         {
@@ -21,7 +21,7 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Автобус на 50 мест)",
             "time": {
-                "hours": 18,
+                "hours": 9,
                 "minutes": 30
             }
         },
@@ -32,7 +32,7 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Микроавтобус)",
             "time": {
-                "hours": 19,
+                "hours": 20,
                 "minutes": 30
             }
         },
@@ -54,7 +54,7 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Микроавтобус)",
             "time": {
-                "hours": 20,
+                "hours": 17,
                 "minutes": 40
             }
         },
@@ -65,7 +65,7 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Автобус на 50 мест)",
             "time": {
-                "hours": 21,
+                "hours": 17,
                 "minutes": 10
             }
         },
@@ -76,7 +76,7 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Автобус на 50 мест)",
             "time": {
-                "hours": 22,
+                "hours": 16,
                 "minutes": 10
             }
         }
@@ -86,7 +86,42 @@ busScheduleApp.factory("Schedule", function() {
 
 busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
 
-    var departures = Schedule.departures;
+    var MINUTES_IN_HOUR = 60;
+
+    var compareDeparture = function(departureA, departureB) {
+        if(departureA.time.hours > departureB.time.hours){
+            return 1;
+        }
+        if(departureA.time.hours == departureB.time.hours) {
+            if(departureA.time.minutes > departureB.time.minutes) {
+                return 1;
+            }
+            if(departureA.time.minutes == departureB.time.minutes) {
+                return 0;
+            }
+            return -1;
+        }
+        return -1;
+    };
+
+    var getMinutesToNearestDeparture = function(currentHours, currentMinutes, nearestDepartureHours, nearestDepartureMinutes) {
+        var minutesToNearestDeparture;
+        if((currentHours > nearestDepartureHours)) {
+            minutesToNearestDeparture = 0;
+        }
+        if((currentHours == nearestDepartureHours) && (currentMinutes >= nearestDepartureMinutes)) {
+            minutesToNearestDeparture = nearestDepartureMinutes - currentMinutes;
+        }
+        if((currentHours == nearestDepartureHours) && (currentMinutes < nearestDepartureMinutes)) {
+            minutesToNearestDeparture = 0;
+        }
+        if((currentHours < nearestDepartureHours)) {
+            minutesToNearestDeparture = ((nearestDepartureHours - currentHours) - 1)*MINUTES_IN_HOUR + (MINUTES_IN_HOUR - currentMinutes) + nearestDepartureMinutes
+        }
+        return minutesToNearestDeparture;
+    };
+
+    var departures = Schedule.departures.sort(compareDeparture);
 
     $scope.$watch('departures', function() {
         $timeout(function() {
@@ -111,6 +146,15 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
 
             $scope.departures = departuresFromNow;
 
-        }, 1000);
+            var nearestDeparture = $scope.departures[0].time;
+            var minutesToNearestDeparture = getMinutesToNearestDeparture(currentHours, currentMinutes, nearestDeparture.hours, nearestDeparture.minutes);
+
+            $scope.minutesToNearestDeparture = minutesToNearestDeparture;
+
+            console.log('Schedule was updated');
+            console.log('Nearest departure is ' + nearestDeparture.hours + ':' + nearestDeparture.minutes);
+            console.log('Minutes to nearest departure: ' + minutesToNearestDeparture);
+
+        }, 5000);
     });
 });
