@@ -108,14 +108,13 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
         var minutesToNearestDeparture;
         if((currentHours > nearestDepartureHours)) {
             minutesToNearestDeparture = 0;
-        }
-        if((currentHours == nearestDepartureHours) && (currentMinutes < nearestDepartureMinutes)) {
-            minutesToNearestDeparture = nearestDepartureMinutes - currentMinutes;
-        }
-        if((currentHours == nearestDepartureHours) && (currentMinutes >= nearestDepartureMinutes)) {
-            minutesToNearestDeparture = 0;
-        }
-        if((currentHours < nearestDepartureHours)) {
+        } else if(currentHours == nearestDepartureHours) {
+            if(currentMinutes < nearestDepartureMinutes) {
+                minutesToNearestDeparture = nearestDepartureMinutes - currentMinutes;
+            } else if((currentHours == nearestDepartureHours) && (currentMinutes >= nearestDepartureMinutes)) {
+                minutesToNearestDeparture = 0;
+            }
+        } else if(currentHours < nearestDepartureHours) {
             minutesToNearestDeparture = ((nearestDepartureHours - currentHours) - 1)*MINUTES_IN_HOUR + (MINUTES_IN_HOUR - currentMinutes) + nearestDepartureMinutes
         }
         return minutesToNearestDeparture;
