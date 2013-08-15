@@ -10,8 +10,8 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Микроавтобус)",
             "time": {
-                "hours": 13,
-                "minutes": 25
+                "hours": 22,
+                "minutes": 15
             }
         },
         {
@@ -21,8 +21,8 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Автобус на 50 мест)",
             "time": {
-                "hours": 9,
-                "minutes": 30
+                "hours": 13,
+                "minutes": 15
             }
         },
         {
@@ -32,8 +32,8 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Микроавтобус)",
             "time": {
-                "hours": 20,
-                "minutes": 30
+                "hours": 23,
+                "minutes": 58
             }
         },
         {
@@ -43,8 +43,8 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Автобус на 50 мест)",
             "time": {
-                "hours": 20,
-                "minutes": 10
+                "hours": 23,
+                "minutes": 59
             }
         },
         {
@@ -150,6 +150,9 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
             var minutesToNearestDeparture = getMinutesToNearestDeparture(currentHours, currentMinutes, nearestDeparture.hours, nearestDeparture.minutes);
 
             $scope.minutesToNearestDeparture = minutesToNearestDeparture;
+
+            chrome.browserAction.setBadgeText({text: "" + minutesToNearestDeparture});
+            chrome.browserAction.setBadgeBackgroundColor({color: '#049cdb'});
 
             console.log('Schedule was updated');
             console.log('Nearest departure is ' + nearestDeparture.hours + ':' + nearestDeparture.minutes);
