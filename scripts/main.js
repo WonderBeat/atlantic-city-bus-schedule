@@ -65,8 +65,8 @@ busScheduleApp.factory("Schedule", function() {
             },
             "type": "Yota Bus(Автобус на 50 мест)",
             "time": {
-                "hours": 17,
-                "minutes": 10
+                "hours": 18,
+                "minutes": 15
             }
         },
         {
@@ -87,8 +87,10 @@ busScheduleApp.factory("Schedule", function() {
 busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
 
     var MINUTES_IN_HOUR = 60;
+    var BADGE_COLOR = '#049cdb';
 
     var compareDeparture = function(departureA, departureB) {
+
         if(departureA.time.hours > departureB.time.hours){
             return 1;
         }
@@ -104,8 +106,12 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
         return -1;
     };
 
-    var getMinutesToNearestDeparture = function(currentHours, currentMinutes, nearestDepartureHours, nearestDepartureMinutes) {
+    var getMinutesToNearestDeparture = function(nearestDeparture ,currentHours, currentMinutes) {
+
+        var nearestDepartureHours = nearestDeparture.time.hours;
+        var nearestDepartureMinutes = nearestDeparture.time.minutes;
         var minutesToNearestDeparture;
+
         if((currentHours > nearestDepartureHours)) {
             minutesToNearestDeparture = 0;
         }
@@ -121,43 +127,43 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
         return minutesToNearestDeparture;
     };
 
+    var setBadge = function(minutesToNearestDeparture) {
+
+        chrome.browserAction.setBadgeText({text: "" + minutesToNearestDeparture});
+        chrome.browserAction.setBadgeBackgroundColor({color: BADGE_COLOR});
+    };
+
+    var getActualDepartures = function(departures, currentHours, currentMinutes) {
+
+        var actualDepartures = [];
+
+        for(var i=0; i < departures.length; i++) {
+            if(departures[i].time.hours > currentHours) {
+                actualDepartures.push(departures[i]);
+            }
+            if(departures[i].time.hours == currentHours) {
+                if(departures[i].time.minutes >= currentMinutes) {
+                    actualDepartures.push(departures[i]);
+                }
+            }
+        }
+        return actualDepartures
+    };
+
     var departures = Schedule.departures.sort(compareDeparture);
 
     $scope.$watch('departures', function() {
         $timeout(function() {
 
             //current time
-            var now = new Date();
-            var currentHours = now.getHours();
-            var currentMinutes = now.getMinutes();
+            var now = new Date(), currentHours = now.getHours(), currentMinutes = now.getMinutes();
 
-            var departuresFromNow = [];
+            $scope.departures = getActualDepartures(departures, currentHours, currentMinutes);
 
-            for(var i=0; i < departures.length; i++) {
-                if(departures[i].time.hours > currentHours) {
-                    departuresFromNow.push(departures[i]);
-                }
-                if(departures[i].time.hours == currentHours) {
-                    if(departures[i].time.minutes >= currentMinutes) {
-                        departuresFromNow.push(departures[i]);
-                    }
-                }
-            }
+            $scope.minutesToNearestDeparture = getMinutesToNearestDeparture($scope.departures[0], currentHours, currentMinutes);
 
-            $scope.departures = departuresFromNow;
+            setBadge($scope.minutesToNearestDeparture);
 
-            var nearestDeparture = $scope.departures[0].time;
-            var minutesToNearestDeparture = getMinutesToNearestDeparture(currentHours, currentMinutes, nearestDeparture.hours, nearestDeparture.minutes);
-
-            $scope.minutesToNearestDeparture = minutesToNearestDeparture;
-
-            chrome.browserAction.setBadgeText({text: "" + minutesToNearestDeparture});
-            chrome.browserAction.setBadgeBackgroundColor({color: '#049cdb'});
-
-            console.log('Schedule was updated');
-            console.log('Nearest departure is ' + nearestDeparture.hours + ':' + nearestDeparture.minutes);
-            console.log('Minutes to nearest departure: ' + minutesToNearestDeparture);
-
-        }, 5000);
+        }, 1000);
     });
 });
