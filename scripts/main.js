@@ -90,18 +90,15 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
     var BADGE_COLOR = '#049cdb';
 
     var compareDeparture = function(departureA, departureB) {
-
-        if(departureA.time.hours > departureB.time.hours){
+        if(departureA.time.hours > departureB.time.hours) {
             return 1;
-        }
-        if(departureA.time.hours == departureB.time.hours) {
+        } else if(departureA.time.hours == departureB.time.hours) {
             if(departureA.time.minutes > departureB.time.minutes) {
                 return 1;
             }
             if(departureA.time.minutes == departureB.time.minutes) {
                 return 0;
             }
-            return -1;
         }
         return -1;
     };
@@ -114,14 +111,13 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
 
         if((currentHours > nearestDepartureHours)) {
             minutesToNearestDeparture = 0;
-        }
-        if((currentHours == nearestDepartureHours) && (currentMinutes < nearestDepartureMinutes)) {
-            minutesToNearestDeparture = nearestDepartureMinutes - currentMinutes;
-        }
-        if((currentHours == nearestDepartureHours) && (currentMinutes >= nearestDepartureMinutes)) {
-            minutesToNearestDeparture = 0;
-        }
-        if((currentHours < nearestDepartureHours)) {
+        } else if(currentHours == nearestDepartureHours) {
+            if(currentMinutes < nearestDepartureMinutes) {
+                minutesToNearestDeparture = nearestDepartureMinutes - currentMinutes;
+            } else if((currentHours == nearestDepartureHours) && (currentMinutes >= nearestDepartureMinutes)) {
+                minutesToNearestDeparture = 0;
+            }
+        } else if(currentHours < nearestDepartureHours) {
             minutesToNearestDeparture = ((nearestDepartureHours - currentHours) - 1)*MINUTES_IN_HOUR + (MINUTES_IN_HOUR - currentMinutes) + nearestDepartureMinutes
         }
         return minutesToNearestDeparture;
