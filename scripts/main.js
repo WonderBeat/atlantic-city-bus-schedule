@@ -89,17 +89,15 @@ busScheduleApp.controller('ScheduleCtrl', function($scope, $timeout, Schedule) {
     var MINUTES_IN_HOUR = 60;
 
     var compareDeparture = function(departureA, departureB) {
-        if(departureA.time.hours > departureB.time.hours){
+        if(departureA.time.hours > departureB.time.hours) {
             return 1;
-        }
-        if(departureA.time.hours == departureB.time.hours) {
+        } else if(departureA.time.hours == departureB.time.hours) {
             if(departureA.time.minutes > departureB.time.minutes) {
                 return 1;
             }
             if(departureA.time.minutes == departureB.time.minutes) {
                 return 0;
             }
-            return -1;
         }
         return -1;
     };
