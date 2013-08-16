@@ -7,7 +7,7 @@ var DEPARTURES = [
         "type": "Yota Bus(Микроавтобус)",
         "time": {
             "hours": 18,
-            "minutes": 10
+            "minutes": 40
         }
     },
     {
@@ -17,8 +17,8 @@ var DEPARTURES = [
         },
         "type": "Yota Bus(Автобус на 50 мест)",
         "time": {
-            "hours": 12,
-            "minutes": 55
+            "hours": 19,
+            "minutes": 5
         }
     },
     {
@@ -78,7 +78,8 @@ var DEPARTURES = [
     }
 ];
 var MINUTES_IN_HOUR = 60;
-var BADGE_COLOR = '#049cdb';
+var NORMAL_BADGE_COLOR = '#049cdb';
+var ALARM_BADGE_COLOR = '#d10d00';
 
 var compareDeparture = function(departureA, departureB) {
     if(departureA.time.hours > departureB.time.hours) {
@@ -116,8 +117,18 @@ var getMinutesToNearestDeparture = function(nearestDeparture ,currentHours, curr
 
 var setBadge = function(minutesToNearestDeparture) {
 
-    chrome.browserAction.setBadgeText({text: "" + minutesToNearestDeparture});
-    chrome.browserAction.setBadgeBackgroundColor({color: BADGE_COLOR});
+    var badgeText = "";
+    var badgeColor = NORMAL_BADGE_COLOR;
+
+    if(minutesToNearestDeparture <= 30) {
+        badgeText = minutesToNearestDeparture;
+        if(minutesToNearestDeparture < 5) {
+            badgeColor = ALARM_BADGE_COLOR;
+        }
+    }
+
+    chrome.browserAction.setBadgeText({text: "" + badgeText});
+    chrome.browserAction.setBadgeBackgroundColor({color: badgeColor});
 };
 
 var getActualDepartures = function(departures, currentHours, currentMinutes) {
@@ -154,4 +165,4 @@ var departures = DEPARTURES.sort(compareDeparture);
 
 setInterval(function() {
     updateSchedule(departures);
-}, 1000);
+}, 100);
