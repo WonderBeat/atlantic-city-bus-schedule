@@ -8,7 +8,7 @@
 	</head>
 	<body ng-app="busScheduleApp" ng-csp="">
 		<div class="content" ng-controller="ScheduleCtrl">
-			<table>
+			<table ng-show="departures.length > 0">
                 <tr>
                     <td>Type</td>
                     <td>Time</td>
@@ -18,6 +18,7 @@
 					<td>{{departure.time.hours}}:{{departure.time.minutes}}</td>
 				</tr>
 			</table>
+            <p ng-show="departures.length == 0">{{noBusTodayText}}</p>
 		</div>
 	</body>
 </html>

@@ -122,8 +122,11 @@ var setBadge = function(minutesToNearestDeparture) {
 
     if(minutesToNearestDeparture <= 30) {
         badgeText = minutesToNearestDeparture;
-        if(minutesToNearestDeparture < 5) {
+        if(minutesToNearestDeparture <= 5) {
             badgeColor = ALARM_BADGE_COLOR;
+        }
+        if(minutesToNearestDeparture == -1) {
+            badgeText = "";
         }
     }
 
@@ -154,7 +157,7 @@ var updateSchedule = function(departures) {
 
     var actualDepartures = getActualDepartures(departures, currentHours, currentMinutes);
 
-    var minutesToNearestDeparture = getMinutesToNearestDeparture(actualDepartures[0], currentHours, currentMinutes);
+    var minutesToNearestDeparture = (actualDepartures.length == 0) ? -1 : getMinutesToNearestDeparture(actualDepartures[0], currentHours, currentMinutes);
 
     setBadge(minutesToNearestDeparture);
 
@@ -165,4 +168,4 @@ var departures = DEPARTURES.sort(compareDeparture);
 
 setInterval(function() {
     updateSchedule(departures);
-}, 100);
+}, 1000);
