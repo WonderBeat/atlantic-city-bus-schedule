@@ -4,21 +4,23 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <script src="scripts/lib/angular.js"></script>
 		<script src="scripts/main.js"></script>
-		<link rel="stylesheet" href="styles/main.css">
+        <link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="styles/css/main.css">
 	</head>
 	<body ng-app="busScheduleApp" ng-csp="">
+        <div class="header">
+            <p>ATLANTIC-CITY</p>
+            <p>Bus Schedule</p>
+        </div>
 		<div class="content" ng-controller="ScheduleCtrl">
-			<table ng-show="departures.length > 0">
-                <tr>
-                    <td>Type</td>
-                    <td>Time</td>
-                </tr>
-				<tr ng-repeat="departure in departures | orderBy:['time.hours', 'time.minutes'] | limitTo:3">
-					<td>{{departure.type}}</td>
-					<td>{{departure.time.hours}}:{{departure.time.minutes}}</td>
-				</tr>
-			</table>
-            <p ng-show="departures.length == 0">{{noBusTodayText}}</p>
+			<ul ng-show="departures.length > 0">
+				<li class="departure" ng-repeat="departure in departures | orderBy:['time.hours', 'time.minutes'] | limitTo:departuresLimit">
+					<p>{{departure.time.hours}}:{{departure.time.minutes}}</p>
+					<p>{{departure.type}}</p>
+				</li>
+			</ul>
+            <p ng-show="departures.length > departuresLimit" ng-click="increaseDeparturesLimit()" class="btn-more">{{moreButtonText}}</p>
+            <p ng-show="departures.length == 0" class="no-bus-today-text">{{noBusTodayText}}</p>
 		</div>
 	</body>
 </html>
