@@ -7,51 +7,7 @@ var DEPARTURES = [
         "type": "Yota Bus(Микроавтобус)",
         "time": {
             "hours": 18,
-            "minutes": 40
-        }
-    },
-    {
-        "direction": {
-            "from": "БЦ Атлантик-Сити",
-            "to": "с.м. Черная речка"
-        },
-        "type": "Yota Bus(Автобус на 50 мест)",
-        "time": {
-            "hours": 19,
-            "minutes": 5
-        }
-    },
-    {
-        "direction": {
-            "from": "БЦ Атлантик-Сити",
-            "to": "с.м. Черная речка"
-        },
-        "type": "Yota Bus(Микроавтобус)",
-        "time": {
-            "hours": 23,
-            "minutes": 58
-        }
-    },
-    {
-        "direction": {
-            "from": "БЦ Атлантик-Сити",
-            "to": "с.м. Черная речка"
-        },
-        "type": "Yota Bus(Автобус на 50 мест)",
-        "time": {
-            "hours": 23,
-            "minutes": 59
-        }
-    },
-    {
-        "direction": {
-            "from": "БЦ Атлантик-Сити",
-            "to": "с.м. Черная речка"
-        },
-        "type": "Yota Bus(Микроавтобус)",
-        "time": {
-            "hours": 17,
-            "minutes": 40
+            "minutes": 20
         }
     },
     {
@@ -62,7 +18,18 @@ var DEPARTURES = [
         "type": "Yota Bus(Автобус на 50 мест)",
         "time": {
             "hours": 18,
-            "minutes": 15
+            "minutes": 30
+        }
+    },
+    {
+        "direction": {
+            "from": "БЦ Атлантик-Сити",
+            "to": "с.м. Черная речка"
+        },
+        "type": "Yota Bus(Микроавтобус)",
+        "time": {
+            "hours": 19,
+            "minutes": 30
         }
     },
     {
@@ -72,8 +39,41 @@ var DEPARTURES = [
         },
         "type": "Yota Bus(Автобус на 50 мест)",
         "time": {
-            "hours": 16,
-            "minutes": 12
+            "hours": 20,
+            "minutes": 10
+        }
+    },
+    {
+        "direction": {
+            "from": "БЦ Атлантик-Сити",
+            "to": "с.м. Черная речка"
+        },
+        "type": "Yota Bus(Микроавтобус)",
+        "time": {
+            "hours": 20,
+            "minutes": 40
+        }
+    },
+    {
+        "direction": {
+            "from": "БЦ Атлантик-Сити",
+            "to": "с.м. Черная речка"
+        },
+        "type": "Yota Bus(Автобус на 50 мест)",
+        "time": {
+            "hours": 21,
+            "minutes": 10
+        }
+    },
+    {
+        "direction": {
+            "from": "БЦ Атлантик-Сити",
+            "to": "с.м. Черная речка"
+        },
+        "type": "Yota Bus(Автобус на 50 мест)",
+        "time": {
+            "hours": 12,
+            "minutes": 10
         }
     }
 ];
