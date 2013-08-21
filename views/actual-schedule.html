@@ -1,0 +1,15 @@
+<div class="content">
+    <ul ng-show="departures.length > 0">
+        <li class="departure" ng-repeat="departure in departures | orderBy:['time.hours', 'time.minutes'] | limitTo:departuresLimit">
+            <p>{{departure.time.hours}}:{{departure.time.minutes}}</p>
+            <p>{{departure.type}}</p>
+        </li>
+    </ul>
+    <p class="btn">
+        <a ng-show="departures.length > departuresLimit" ng-click="increaseDeparturesLimit()">{{moreButtonText}}</a>
+    </p>
+    <p class="btn">
+        <a href="#/fullschedule">Посмотреть полное расписание</a>
+    </p>
+    <p ng-show="departures.length == 0" class="no-bus-today-text">{{noBusTodayText}}</p>
+</div>

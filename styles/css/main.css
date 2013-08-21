@@ -48,11 +48,15 @@ body {
 .content .departure p:last-child {
   font-size: 12px;
 }
-.content .btn-more {
+.content .btn {
   text-align: center;
+  cursor: pointer;
+}
+.content .btn a {
+  text-decoration: none;
+  outline: none;
   font-size: 12px;
   color: #049cdb;
-  cursor: pointer;
 }
 .content .no-bus-today-text {
   font-size: 12px;

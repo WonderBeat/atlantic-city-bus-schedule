@@ -72,7 +72,7 @@ var DEPARTURES = [
         },
         "type": "Yota Bus(Автобус на 50 мест)",
         "time": {
-            "hours": 12,
+            "hours": 22,
             "minutes": 10
         }
     }
@@ -161,10 +161,12 @@ var updateSchedule = function(departures) {
 
     setBadge(minutesToNearestDeparture);
 
-    localStorage.setItem('departure', JSON.stringify(actualDepartures));
+    localStorage.setItem('actualDepartures', JSON.stringify(actualDepartures));
 };
 
 var departures = DEPARTURES.sort(compareDeparture);
+
+localStorage.setItem('allDepartures', JSON.stringify(departures));
 
 setInterval(function() {
     updateSchedule(departures);

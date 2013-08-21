@@ -1,0 +1,11 @@
+<div class="content">
+    <ul ng-show="departures.length > 0">
+        <li class="departure" ng-repeat="departure in departures">
+            <p>{{departure.time.hours}}:{{departure.time.minutes}}</p>
+            <p>{{departure.type}}</p>
+        </li>
+    </ul>
+    <p class="btn">
+        <a href="#/">Назад</a>
+    </p>
+</div>

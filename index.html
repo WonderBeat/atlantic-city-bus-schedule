@@ -12,15 +12,6 @@
             <p>ATLANTIC-CITY</p>
             <p>Bus Schedule</p>
         </div>
-		<div class="content" ng-controller="ScheduleCtrl">
-			<ul ng-show="departures.length > 0">
-				<li class="departure" ng-repeat="departure in departures | orderBy:['time.hours', 'time.minutes'] | limitTo:departuresLimit">
-					<p>{{departure.time.hours}}:{{departure.time.minutes}}</p>
-					<p>{{departure.type}}</p>
-				</li>
-			</ul>
-            <p ng-show="departures.length > departuresLimit" ng-click="increaseDeparturesLimit()" class="btn-more">{{moreButtonText}}</p>
-            <p ng-show="departures.length == 0" class="no-bus-today-text">{{noBusTodayText}}</p>
-		</div>
+        <div ng-view></div>
 	</body>
 </html>
