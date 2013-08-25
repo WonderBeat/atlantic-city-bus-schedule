@@ -1,7 +1,7 @@
 <div class="content">
     <ul ng-show="departures.length > 0">
         <li class="departure" ng-repeat="departure in departures">
-            <p>{{departure.time.hours}}:{{departure.time.minutes}}</p>
+            <p>{{departure.time.hours | pad: 2}}:{{departure.time.minutes | pad: 2}}</p>
             <p>{{departure.type}}</p>
         </li>
     </ul>

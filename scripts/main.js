@@ -38,3 +38,15 @@ busScheduleApp.controller('FullScheduleCtrl', function($scope) {
     $scope.departures = JSON.parse(localStorage.getItem('allDepartures'))
 
 });
+
+/**
+ * Number padding filter
+ * Example: <h1>{{53 | pad 6}}</h1> -> <h1>000053</h1>
+ */
+busScheduleApp.filter('pad', function() {
+	return function(input, paddingSize) {
+		var str = input+"";
+		while (str.length < paddingSize) str = "0" + str;
+		return str;
+	};
+});
